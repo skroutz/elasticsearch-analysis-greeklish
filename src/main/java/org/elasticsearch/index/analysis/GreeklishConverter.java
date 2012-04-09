@@ -87,10 +87,21 @@ public class GreeklishConverter {
 			{ "φ", "f", "ph" }, { "χ", "x", "h", "ch" }, { "ψ", "ps" },
 			{ "ω", "w", "o", "v" } };
 
+	/**
+	 * Keep the generated strings in a list. The populated list is
+	 * returned to the filter.
+	 * CopyOnWriteArrayList is used because it is thread safe and has the
+	 * ability to add components while a thread iterates over its elements.
+	 */
+	private final List<StringBuilder> greeklishList;
+
 	// Constructor
 	public GreeklishConverter(int maxExpansions) {
 
 		this.maxExpansions = maxExpansions;
+
+		this.greeklishList = new CopyOnWriteArrayList<StringBuilder>();
+
 		this.logger = Loggers.getLogger("greeklish.converter");
 		// populate diphthongs
 		for (String[] diphthongCase : dipthongCases) {
@@ -113,7 +124,8 @@ public class GreeklishConverter {
 	 *            the length of the input token
 	 * @return A list of the generated strings
 	 */
-	public List<StringBuilder> convert(char[] inputToken, int tokenLength) {
+	public final List<StringBuilder> convert(char[] inputToken, int tokenLength) {
+		greeklishList.clear();
 		// Convert to string in order to replace the diphthongs with
 		// special characters.
 		String tokenString = new String(inputToken, 0, tokenLength);
@@ -131,12 +143,6 @@ public class GreeklishConverter {
 		// character will take place through this array.
 		inputToken = tokenString.toCharArray();
 
-		// Keep the generated strings in a list. The populated list is
-		// returned to the filter.
-		// CopyOnWriteArrayList is used because it is thread safe and has the
-		// ability to add components while a thread iterates over its elements.
-		List<StringBuilder> greeklishList = new CopyOnWriteArrayList<StringBuilder>();
-
 		// Allocate space that is twice the length of the input token in order
 		// to cover
 		// worst case scenario where each Greek character is replaced by two
@@ -146,8 +152,7 @@ public class GreeklishConverter {
 		// Iterate through the characters of the token and generate greeklish
 		// words
 		for (char greekChar : inputToken) {
-			addCharacter(greeklishList, conversions.get(greekChar),
-					allocatedSpace);
+			addCharacter(conversions.get(greekChar), allocatedSpace);
 		}
 		return greeklishList;
 	}
@@ -157,35 +162,32 @@ public class GreeklishConverter {
 	 * specific Greek character. </p> For each different combination of latin
 	 * characters, a new token is generated. </p>
 	 *
-	 * @param tokenList
-	 *            The list where the greeklish tokens are kept
 	 * @param convertStrings
 	 *            The latin characters that will be added to the tokens
 	 * @param bufferSize
 	 *            The size of the buffer that will be allocated in case of new
 	 *            StringBuilder
 	 */
-	private void addCharacter(List<StringBuilder> tokenList,
-			String[] convertStrings, int bufferSize) {
+	private void addCharacter(String[] convertStrings, int bufferSize) {
 		// If the token list is empty, create a new StringBuilder and add the
 		// latin characters
-		if (tokenList.isEmpty()) {
+		if (greeklishList.isEmpty()) {
 			for (String convertString : convertStrings) {
 				StringBuilder greeklishWord = new StringBuilder(bufferSize);
 				greeklishWord.append(convertString);
-				tokenList.add(greeklishWord);
+				greeklishList.add(greeklishWord);
 			}
 			// Add the latin characters to each saved greeklish token, and
 			// generate new ones
 			// when the combinations are more than one.
 		} else {
-			for (StringBuilder atoken : tokenList) {
-				if (tokenList.size() <= maxExpansions) {
+			for (StringBuilder atoken : greeklishList) {
+				if (greeklishList.size() <= maxExpansions) {
 					for (String convertString : Arrays.copyOfRange(
 							convertStrings, 1, convertStrings.length)) {
 						StringBuilder newToken = new StringBuilder(atoken);
 						newToken.append(convertString);
-						tokenList.add(newToken);
+						greeklishList.add(newToken);
 					}
 				}
 				atoken.append(convertStrings[0]);
