@@ -42,6 +42,12 @@ public class GreeklishConverter {
 	private static final String NT = "Ν";
 
 	/**
+	 * The maximum number of greeklish words that can be produce
+	 * from a single Greek word.
+	 */
+	private final int maxExpansions;
+
+	/**
 	 * Tokens that contain only these characters will be affected by this
 	 * filter.
 	 */
@@ -50,13 +56,13 @@ public class GreeklishConverter {
 	/**
 	 * Each diphthong is replaced by a special capital Greek character.
 	 */
-	private Map<String, String> diphthongs = new HashMap<String, String>();
+	private final Map<String, String> diphthongs = new HashMap<String, String>();
 
 	/**
 	 * This hash has keys all the possible conversions that can be applied and
 	 * values the strings that can replace the corresponding Greek character.
 	 */
-	private Map<Character, String[]> conversions = new HashMap<Character, String[]>();
+	private final Map<Character, String[]> conversions = new HashMap<Character, String[]>();
 
 	/**
 	 * The possible diphthong cases.
@@ -82,8 +88,9 @@ public class GreeklishConverter {
 			{ "ω", "w", "o", "v" } };
 
 	// Constructor
-	public GreeklishConverter() {
+	public GreeklishConverter(int maxExpansions) {
 
+		this.maxExpansions = maxExpansions;
 		this.logger = Loggers.getLogger("greeklish.converter");
 		// populate diphthongs
 		for (String[] diphthongCase : dipthongCases) {
@@ -173,7 +180,7 @@ public class GreeklishConverter {
 			// when the combinations are more than one.
 		} else {
 			for (StringBuilder atoken : tokenList) {
-				if (tokenList.size() <= 20) {
+				if (tokenList.size() <= maxExpansions) {
 					for (String convertString : Arrays.copyOfRange(
 							convertStrings, 1, convertStrings.length)) {
 						StringBuilder newToken = new StringBuilder(atoken);

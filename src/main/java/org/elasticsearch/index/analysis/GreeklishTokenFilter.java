@@ -35,7 +35,6 @@ public class GreeklishTokenFilter extends TokenFilter {
 	 */
 	public static final String TOKEN_TYPE = "greeklish_word";
 
-
 	/**
 	 * The greeklish word buffer
 	 */
@@ -49,12 +48,13 @@ public class GreeklishTokenFilter extends TokenFilter {
 	/**
 	 * The greeklish converter that makes all the real work.
 	 */
-	private GreeklishConverter greeklishConverter = new GreeklishConverter();
+	private GreeklishConverter greeklishConverter;
 
 	// Constructor
-	public GreeklishTokenFilter(TokenStream tokenStream) {
+	public GreeklishTokenFilter(TokenStream tokenStream, int maxExpansions) {
 		super(tokenStream);
 		this.logger = Loggers.getLogger("greeklish.filter");
+		this.greeklishConverter = new GreeklishConverter(maxExpansions);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 public class GreeklishConverterTest {
+	private static final int MAX_EXPANSIONS = 20;
 	private static final String[] greekWords = {
 			"αυτοκινητο", "ομπρελα", "ξεσκεπαστοσ",
 	};
@@ -21,7 +22,7 @@ public class GreeklishConverterTest {
 	
 	@BeforeMethod
 	public void setUp() {
-		this.converter = new GreeklishConverter();
+		this.converter = new GreeklishConverter(MAX_EXPANSIONS);
 	}
 
 	@Test
