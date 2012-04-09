@@ -173,6 +173,9 @@ public class GreeklishConverter {
 		// latin characters
 		if (greeklishList.isEmpty()) {
 			for (String convertString : convertStrings) {
+				if (greeklishList.size() >= maxExpansions) {
+					break;
+				}
 				StringBuilder greeklishWord = new StringBuilder(bufferSize);
 				greeklishWord.append(convertString);
 				greeklishList.add(greeklishWord);
@@ -182,13 +185,14 @@ public class GreeklishConverter {
 			// when the combinations are more than one.
 		} else {
 			for (StringBuilder atoken : greeklishList) {
-				if (greeklishList.size() <= maxExpansions) {
-					for (String convertString : Arrays.copyOfRange(
-							convertStrings, 1, convertStrings.length)) {
-						StringBuilder newToken = new StringBuilder(atoken);
-						newToken.append(convertString);
-						greeklishList.add(newToken);
+				for (String convertString : Arrays.copyOfRange(convertStrings,
+						1, convertStrings.length)) {
+					if (greeklishList.size() >= maxExpansions) {
+						break;
 					}
+					StringBuilder newToken = new StringBuilder(atoken);
+					newToken.append(convertString);
+					greeklishList.add(newToken);
 				}
 				atoken.append(convertStrings[0]);
 			}
