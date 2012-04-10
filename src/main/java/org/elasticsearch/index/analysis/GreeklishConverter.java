@@ -100,6 +100,13 @@ public class GreeklishConverter {
 	 */
 	private String tokenString;
 
+	/**
+	 * Input token converted into String without substitutions.
+	 * It is used for logging the processing token.
+	 */
+	private String initialToken;
+
+
 	// Constructor
 	public GreeklishConverter(int maxExpansions) {
 
@@ -137,6 +144,9 @@ public class GreeklishConverter {
 		// Convert to string in order to replace the diphthongs with
 		// special characters.
 		tokenString = new String(inputToken, 0, tokenLength);
+
+		// Keep the initial state of the tokenString
+		initialToken = tokenString;
 
 		// Is this a Greek word?
 		if (!identifyGreekWord(tokenString)) {
@@ -182,7 +192,7 @@ public class GreeklishConverter {
 		if (greeklishList.isEmpty()) {
 			for (String convertString : convertStrings) {
 				if (greeklishList.size() >= maxExpansions) {
-					logger.debug("Skipping for token [{}]", tokenString);
+					logger.debug("Skipping for token [{}]", initialToken);
 					break;
 				}
 				StringBuilder greeklishWord = new StringBuilder(bufferSize);
@@ -197,7 +207,7 @@ public class GreeklishConverter {
 				for (String convertString : Arrays.copyOfRange(convertStrings,
 						1, convertStrings.length)) {
 					if (greeklishList.size() >= maxExpansions) {
-						logger.debug("Skipping for token [{}]", tokenString);
+						logger.debug("Skipping for token [{}]", initialToken);
 						break;
 					}
 					StringBuilder newToken = new StringBuilder(atoken);
