@@ -95,14 +95,20 @@ public class GreeklishConverter {
 	 */
 	private final List<StringBuilder> greeklishList;
 
+	/**
+	 * Input token converted into String.
+	 */
+	private String tokenString;
+
 	// Constructor
 	public GreeklishConverter(int maxExpansions) {
+
+		this.logger = Loggers.getLogger("greeklish.converter");
 
 		this.maxExpansions = maxExpansions;
 
 		this.greeklishList = new CopyOnWriteArrayList<StringBuilder>();
 
-		this.logger = Loggers.getLogger("greeklish.converter");
 		// populate diphthongs
 		for (String[] diphthongCase : dipthongCases) {
 			diphthongs.put(diphthongCase[0], diphthongCase[1]);
@@ -113,6 +119,8 @@ public class GreeklishConverter {
 			conversions.put(convertString[0].charAt(0),
 					Arrays.copyOfRange(convertString, 1, convertString.length));
 		}
+
+		logger.debug("Max expansions: [{}]", maxExpansions);
 	}
 
 	/**
@@ -128,7 +136,7 @@ public class GreeklishConverter {
 		greeklishList.clear();
 		// Convert to string in order to replace the diphthongs with
 		// special characters.
-		String tokenString = new String(inputToken, 0, tokenLength);
+		tokenString = new String(inputToken, 0, tokenLength);
 
 		// Is this a Greek word?
 		if (!identifyGreekWord(tokenString)) {
@@ -174,6 +182,7 @@ public class GreeklishConverter {
 		if (greeklishList.isEmpty()) {
 			for (String convertString : convertStrings) {
 				if (greeklishList.size() >= maxExpansions) {
+					logger.debug("Skipping for token [{}]", tokenString);
 					break;
 				}
 				StringBuilder greeklishWord = new StringBuilder(bufferSize);
@@ -188,6 +197,7 @@ public class GreeklishConverter {
 				for (String convertString : Arrays.copyOfRange(convertStrings,
 						1, convertStrings.length)) {
 					if (greeklishList.size() >= maxExpansions) {
+						logger.debug("Skipping for token [{}]", tokenString);
 						break;
 					}
 					StringBuilder newToken = new StringBuilder(atoken);
