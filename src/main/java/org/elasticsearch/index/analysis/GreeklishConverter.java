@@ -16,7 +16,7 @@ import org.elasticsearch.common.logging.Loggers;
  *         character of the token. A Greek character may have one or more latin
  *         counterparts. So, from a Greek token one or more latin tokens are
  *         generated. </p> Greek words have combination of vowels called
- *         diphthongs. Because diphthongs are special cases, they are treated in
+ *         digraphs. Because digraphs are special cases, they are treated in
  *         isolation.
  */
 public class GreeklishConverter {
@@ -28,7 +28,7 @@ public class GreeklishConverter {
 
 	/**
 	 * Constant variables that represent the character that substitutes a
-	 * diphthong.
+	 * digraph.
 	 */
 	private static final String AI = "Α";
 	private static final String EI = "Ε";
@@ -54,9 +54,9 @@ public class GreeklishConverter {
 	public static final String GREEK_CHARACTERS = "αβγδεζηθικλμνξοπρστυφχψω";
 
 	/**
-	 * Each diphthong is replaced by a special capital Greek character.
+	 * Each digraph is replaced by a special capital Greek character.
 	 */
-	private final Map<String, String> diphthongs = new HashMap<String, String>();
+	private final Map<String, String> digraphs = new HashMap<String, String>();
 
 	/**
 	 * This hash has keys all the possible conversions that can be applied and
@@ -65,9 +65,9 @@ public class GreeklishConverter {
 	private final Map<Character, String[]> conversions = new HashMap<Character, String[]>();
 
 	/**
-	 * The possible diphthong cases.
+	 * The possible digraph cases.
 	 */
-	private static final String[][] dipthongCases = new String[][] {
+	private static final String[][] digraphCases = new String[][] {
 			{ "αι", AI }, { "ει", EI }, { "οι", OI }, { "ου", OY },
 			{ "ευ", EY }, { "αυ", AY }, { "μπ", MP }, { "γγ", GG },
 			{ "γκ", GK }, { "ντ", NT } };
@@ -116,9 +116,9 @@ public class GreeklishConverter {
 
 		this.greeklishList = new CopyOnWriteArrayList<StringBuilder>();
 
-		// populate diphthongs
-		for (String[] diphthongCase : dipthongCases) {
-			diphthongs.put(diphthongCase[0], diphthongCase[1]);
+		// populate digraphs
+		for (String[] digraphCase : digraphCases) {
+			digraphs.put(digraphCase[0], digraphCase[1]);
 		}
 
 		// populate conversions
@@ -141,7 +141,7 @@ public class GreeklishConverter {
 	 */
 	public final List<StringBuilder> convert(char[] inputToken, int tokenLength) {
 		greeklishList.clear();
-		// Convert to string in order to replace the diphthongs with
+		// Convert to string in order to replace the digraphs with
 		// special characters.
 		tokenString = new String(inputToken, 0, tokenLength);
 
@@ -153,8 +153,8 @@ public class GreeklishConverter {
 			return null;
 		}
 
-		for (String key : diphthongs.keySet()) {
-			tokenString = tokenString.replaceAll(key, diphthongs.get(key));
+		for (String key : digraphs.keySet()) {
+			tokenString = tokenString.replaceAll(key, digraphs.get(key));
 		}
 
 		// Convert it back to array of characters. The iterations of each
