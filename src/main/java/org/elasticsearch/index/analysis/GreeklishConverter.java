@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +43,31 @@ public class GreeklishConverter {
 	private static final String NT = "Ν";
 
 	/**
+	 * Constant variable that represent suffixes for pluralization of
+	 * greeklish tokens.
+	 */
+	private static final String SUFFIX_AS = "ας";
+	private static final String SUFFIX_EIA = "εια";
+	private static final String SUFFIX_EIO = "ειο";
+	private static final String SUFFIX_EIOY = "ειου";
+	private static final String SUFFIX_EIWN = "ειων";
+	private static final String SUFFIX_IOY = "ιου";
+	private static final String SUFFIX_IA = "ια";
+	private static final String SUFFIX_IWN = "ιων";
+	private static final String SUFFIX_OS = "οσ";
+	private static final String SUFFIX_OI = "οι";
+	private static final String SUFFIX_EIS = "εισ";
+	private static final String SUFFIX_OYS = "ουσ";
+	private static final String SUFFIX_ES = "εσ";
+	private static final String SUFFIX_HS = "ησ";
+	private static final String SUFFIX_WN = "ων";
+	private static final String SUFFIX_OY = "ου";
+	private static final String SUFFIX_O = "ο";
+	private static final String SUFFIX_H = "η";
+	private static final String SUFFIX_A = "α";
+	private static final String SUFFIX_I = "ι";
+
+	/**
 	 * The maximum number of greeklish words that can be produce
 	 * from a single Greek word.
 	 */
@@ -57,6 +83,12 @@ public class GreeklishConverter {
 	 * Each digraph is replaced by a special capital Greek character.
 	 */
 	private final Map<String, String> digraphs = new HashMap<String, String>();
+
+	/**
+	 * This hash has as keys all the suffixes that we want to handle in order
+	 * to generate singular/plurar greek words.
+	 */
+	private final Map<String, String[]> suffixes = new HashMap<String, String[]>();
 
 	/**
 	 * This hash has keys all the possible conversions that can be applied and
@@ -88,6 +120,24 @@ public class GreeklishConverter {
 			{ "ω", "w", "o", "v" } };
 
 	/**
+	 * The possible suffix strings.
+	 */
+	private static final String[][] suffixStrings = new String[][] {
+		{SUFFIX_AS, "α", "ου", "ων"}, {SUFFIX_EIA, "ειο", "ειων", "ειου"},
+		{SUFFIX_EIO, "εια", "ειων", "ειου"}, {SUFFIX_EIOY, "εια", "ειου", "ειο"},
+		{SUFFIX_EIWN, "εια", "ειου", "ειο"}, {SUFFIX_IOY, "ι", "ια", "ιων"},
+		{SUFFIX_IA, "ιου", "ι", "ιων"}, {SUFFIX_IWN, "ιου", "ια", "ι"},
+		{SUFFIX_OS, "η", "ους", "εωσ", "ου", "οι", "ων"}, {SUFFIX_OI, "οσ", "ου", "ων"},
+		{SUFFIX_EIS, "η", "εωσ", "εων"}, {SUFFIX_OYS, "οσ", "η", "εων"},
+		{SUFFIX_ES, "η", "ασ", "ων", "ησ", "α"}, {SUFFIX_HS, "ων", "εσ", "η"},
+		{SUFFIX_WN, "οσ", "εσ", "α", "η", "ησ", "ου", "οι", "ο", "α"},
+		{SUFFIX_OY, "ων", "α", "ο", "εωσ", "ασ", "οσ"},
+		{SUFFIX_O, "α", "ου", "εων", "ων"},
+		{SUFFIX_H, "οσ", "ουσ", "εων", "εισ", "ησ", "ων"},
+		{SUFFIX_A, "ο" , "ου", "εων", "ων"}, {SUFFIX_I, "ιου", "ια", "ιων"}
+	};
+
+	/**
 	 * Keep the generated strings in a list. The populated list is
 	 * returned to the filter.
 	 * CopyOnWriteArrayList is used because it is thread safe and has the
@@ -105,6 +155,11 @@ public class GreeklishConverter {
 	 * It is used for logging the processing token.
 	 */
 	private String initialToken;
+
+	/**
+	 * The greeklish word buffer
+	 */
+	private Stack<String> greekWords = new Stack<String>();
 
 
 	// Constructor
@@ -127,6 +182,10 @@ public class GreeklishConverter {
 					Arrays.copyOfRange(convertString, 1, convertString.length));
 		}
 
+		// populate suffixes
+		for (String[] suffix : suffixStrings) {
+			suffixes.put(suffix[0], Arrays.copyOfRange(suffix, 1, suffix.length));
+		}
 		logger.debug("Max expansions: [{}]", maxExpansions);
 	}
 
@@ -140,6 +199,7 @@ public class GreeklishConverter {
 	 * @return A list of the generated strings
 	 */
 	public final List<StringBuilder> convert(char[] inputToken, int tokenLength) {
+		greekWords.clear();
 		greeklishList.clear();
 		// Convert to string in order to replace the digraphs with
 		// special characters.
@@ -153,27 +213,45 @@ public class GreeklishConverter {
 			return null;
 		}
 
-		for (String key : digraphs.keySet()) {
-			tokenString = tokenString.replaceAll(key, digraphs.get(key));
+		greekWords.add(tokenString);
+
+		for (String[] suffix : suffixStrings) {
+			if (tokenString.endsWith(suffix[0])) {
+				generate_more_greek_words(suffix[0]);
+				break;
+			}
 		}
 
-		// Convert it back to array of characters. The iterations of each
-		// character will take place through this array.
-		inputToken = tokenString.toCharArray();
+		for (String greekWord : greekWords) {
 
-		// Allocate space that is twice the length of the input token in order
-		// to cover
-		// worst case scenario where each Greek character is replaced by two
-		// latin characters
-		int allocatedSpace = 2 * tokenLength;
+			List<StringBuilder> per_word = new CopyOnWriteArrayList<StringBuilder>();
 
-		// Iterate through the characters of the token and generate greeklish
-		// words
-		for (char greekChar : inputToken) {
-			addCharacter(conversions.get(greekChar), allocatedSpace);
+			// Allocate space that is twice the length of the input token in
+			// order
+			// to cover
+			// worst case scenario where each Greek character is replaced by two
+			// latin characters
+			int allocatedSpace = 2 * greekWord.length();
+
+			for (String key : digraphs.keySet()) {
+				greekWord = greekWord.replaceAll(key, digraphs.get(key));
+			}
+
+			// Convert it back to array of characters. The iterations of each
+			// character will take place through this array.
+			inputToken = greekWord.toCharArray();
+
+			// Iterate through the characters of the token and generate
+			// greeklish
+			// words
+			for (char greekChar : inputToken) {
+				addCharacter(conversions.get(greekChar), allocatedSpace, per_word);
+			}
+			greeklishList.addAll(per_word);
 		}
 		return greeklishList;
 	}
+
 
 	/**
 	 * Add the matching latin characters to the generated greeklish tokens for a
@@ -186,33 +264,33 @@ public class GreeklishConverter {
 	 *            The size of the buffer that will be allocated in case of new
 	 *            StringBuilder
 	 */
-	private void addCharacter(String[] convertStrings, int bufferSize) {
+	private void addCharacter(String[] convertStrings, int bufferSize, List<StringBuilder> perWord) {
 		// If the token list is empty, create a new StringBuilder and add the
 		// latin characters
-		if (greeklishList.isEmpty()) {
+		if (perWord.isEmpty()) {
 			for (String convertString : convertStrings) {
-				if (greeklishList.size() >= maxExpansions) {
+				if (perWord.size() >= maxExpansions) {
 					logger.debug("Skipping for token [{}]", initialToken);
 					break;
 				}
 				StringBuilder greeklishWord = new StringBuilder(bufferSize);
 				greeklishWord.append(convertString);
-				greeklishList.add(greeklishWord);
+				perWord.add(greeklishWord);
 			}
 			// Add the latin characters to each saved greeklish token, and
 			// generate new ones
 			// when the combinations are more than one.
 		} else {
-			for (StringBuilder atoken : greeklishList) {
+			for (StringBuilder atoken : perWord) {
 				for (String convertString : Arrays.copyOfRange(convertStrings,
 						1, convertStrings.length)) {
-					if (greeklishList.size() >= maxExpansions) {
+					if (perWord.size() >= maxExpansions) {
 						logger.debug("Skipping for token [{}]", initialToken);
 						break;
 					}
 					StringBuilder newToken = new StringBuilder(atoken);
 					newToken.append(convertString);
-					greeklishList.add(newToken);
+					perWord.add(newToken);
 				}
 				atoken.append(convertStrings[0]);
 			}
@@ -234,4 +312,13 @@ public class GreeklishConverter {
 		}
 	}
 
+	/**
+	 * Generates more greek words based on the suffix of the original word
+	 * @param inputSuffix the suffix that matched
+	 */
+	private void generate_more_greek_words(final String inputSuffix) {
+		for (String suffix : suffixes.get(inputSuffix)) {
+			greekWords.add(tokenString.replaceAll(inputSuffix + "$", suffix));
+		}
+	}
 }
