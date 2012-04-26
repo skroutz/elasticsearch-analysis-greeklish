@@ -8,13 +8,13 @@ import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.Loggers;
 
 /**
- * @author Tasos Stathopoulos </p> Generates tokens with latin characters from
- *         Greek tokens. It matches one or more latin characters for each Greek
- *         character of the token. A Greek character may have one or more latin
- *         counterparts. So, from a Greek token one or more latin tokens are
+ * @author Tasos Stathopoulos </p> Generates singular/plural variants of greek
+ * 		   tokens and converts them to tokens with latin characters from which are
+ * 		   matched to the corresponding greek characters.</p>
+ * 		   A Greek character may have one or more latin counterparts. So,
+ * 		   from a Greek token one or more latin tokens are
  *         generated. </p> Greek words have combination of vowels called
- *         digraphs. Because digraphs are special cases, they are treated in
- *         isolation.
+ *         digraphs. Because digraphs are special cases, they are treated separately.
  */
 public class GreeklishConverter {
 	/**
@@ -38,27 +38,43 @@ public class GreeklishConverter {
 	 */
 	private String tokenString;
 
+	/**
+	 * Instance of the reverse stemmer that generates the word variants
+	 * of the greek token.
+	 */
 	private final GreekReverseStemmer reverseStemmer;
 
+	/**
+	 * Instance of the greeklish generator that generates the greeklish
+	 * words from the words that are returned by the greek reverse stemmer.
+	 */
 	private final GreeklishGenerator greeklishGenerator;
 
+	/**
+	 * Setting that which is set in the configuration file that defines
+	 * whether the user wants to generate greek variants.
+	 */
 	private final boolean generateGreekVariants;
 
 	// Constructor
 	public GreeklishConverter(int maxExpansions, boolean generateGreekVariants) {
 
+		// Initialize the logger
 		this.logger = Loggers.getLogger("greeklish.converter");
 
+		// Initialize greekWords list
 		this.greekWords = new ArrayList<String>();
 
+		// Initialize reverse stemmer
 		this.reverseStemmer = new GreekReverseStemmer();
 
+		// Initialize greeklish generator
 		this.greeklishGenerator = new GreeklishGenerator(maxExpansions);
 
+		// Initialize setting for generating greek variants
 		this.generateGreekVariants = generateGreekVariants;
 
-		logger.debug("Max expansions: [{}]", maxExpansions);
-		logger.debug("Generate Greek Variants: [{}]", generateGreekVariants);
+		logger.debug("Max expansions: [{}] Generate Greek Variants [{}]", maxExpansions, generateGreekVariants);
 	}
 
 	/**
@@ -71,21 +87,24 @@ public class GreeklishConverter {
 	 * @return A list of the generated strings
 	 */
 	public final List<StringBuilder> convert(char[] inputToken, int tokenLength) {
-		// Convert to string in order to replace the digraphs with
-		// special characters.
+		// Convert to string in order to pass it to the reverse stemmer.
 		tokenString = new String(inputToken, 0, tokenLength);
 		// Is this a Greek word?
 		if (!identifyGreekWord(tokenString)) {
 			return null;
 		}
 
+		// if generating greek variants is on
 		if (generateGreekVariants) {
+			// generate them
 			greekWords = reverseStemmer.generateGreekVariants(tokenString);
 		} else {
 			greekWords.add(tokenString);
 		}
 
+		// if there are greek words
 		if (greekWords.size() > 0) {
+			// generate their greeklish version
 			return greeklishGenerator.generateGreeklishWords(greekWords);
 		} else {
 			return null;

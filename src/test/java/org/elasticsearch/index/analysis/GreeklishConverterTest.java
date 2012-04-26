@@ -38,7 +38,7 @@ public class GreeklishConverterTest {
 
 	@BeforeMethod
 	public void setUp() {
-		this.converter = new GreeklishConverter(MAX_EXPANSIONS);
+		this.converter = new GreeklishConverter(MAX_EXPANSIONS, true);
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class GreeklishConverterTest {
 	@Test
 	public void testMaxGreeklishWordGenerations() {
 		int newMaxExpansions = 2;
-		converter = new GreeklishConverter(newMaxExpansions);
+		converter = new GreeklishConverter(newMaxExpansions, true);
 
 		greeklishWords = converter.convert(greekWords[0].toCharArray(),
 				greekWords[0].length());

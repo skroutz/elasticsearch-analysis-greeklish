@@ -8,6 +8,11 @@ import java.util.Map;
 import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.logging.ESLogger;
 
+/**
+ * @author Tasos Stathopoulos</p>
+ * Generates singular/plural variants of a greek word based
+ * on a combination of predefined rules.
+ */
 public class GreekReverseStemmer {
 
 	/**
@@ -44,7 +49,7 @@ public class GreekReverseStemmer {
 
 	/**
 	 * This hash has as keys all the suffixes that we want to handle in order
-	 * to generate singular/plurar greek words.
+	 * to generate singular/plural greek words.
 	 */
 	private final Map<String, String[]> suffixes = new HashMap<String, String[]>();
 
@@ -77,13 +82,14 @@ public class GreekReverseStemmer {
 	};
 
 	/**
-	 * The greek word buffer
+	 * The greek word list
 	 */
 	private List<String> greekWords = new ArrayList<String>();
 
 	// Constructor
 	public GreekReverseStemmer() {
 
+		// initialize logger
 		this.logger = Loggers.getLogger("greeklish.greekReverseStemmer");
 
 		// populate suffixes
@@ -92,13 +98,25 @@ public class GreekReverseStemmer {
 		}
 	}
 
+	/**
+	 * This method generates the greek variants of the greek token that
+	 * receives.
+	 *
+	 * @param tokenString the greek word
+	 * @return a list of the generated greek word variations
+	 */
 	public List<String> generateGreekVariants(String tokenString) {
+		// clear the list from variations of the previous greek token
 		greekWords.clear();
 
+		// add the initial greek token in the greek words
 		greekWords.add(tokenString);
 
+		// Find the first matching suffix and generate the
+		// the variants of this word
 		for (String[] suffix : suffixStrings) {
 			if (tokenString.endsWith(suffix[0])) {
+				// Add to greekWords the tokens with the desired suffixes
 				generate_more_greek_words(tokenString, suffix[0]);
 				break;
 			}

@@ -1,4 +1,5 @@
 package org.elasticsearch.index.analysis;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,6 +10,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.logging.ESLogger;
 
+/**
+ * @author Tasos Stathopoulos
+ * </p>
+ * Generates greeklish tokens for each element of list
+ * of greek tokens.
+ */
 public class GreeklishGenerator {
 
 	/**
@@ -65,8 +72,14 @@ public class GreeklishGenerator {
 			{ "φ", "f", "ph" }, { "χ", "x", "h", "ch" }, { "ψ", "ps" },
 			{ "ω", "w", "o", "v" } };
 
+	/**
+	 * The maximum greeklish expansions per greek token.
+	 */
 	private final int maxExpansions;
 
+	/**
+	 * A list of greeklish token per each greek word.
+	 */
 	private final List<StringBuilder> perWordGreeklish;
 
 	/**
@@ -111,6 +124,12 @@ public class GreeklishGenerator {
 		}
 	}
 
+	/**
+	 * Gets a list of greek words and generates the greeklish version of
+	 * each word.
+	 * @param greekWords a list of greek words
+	 * @return a list of greeklish words
+	 */
 	public List<StringBuilder> generateGreeklishWords(final List<String> greekWords) {
 		greeklishList.clear();
 		for (String greekWord : greekWords) {
