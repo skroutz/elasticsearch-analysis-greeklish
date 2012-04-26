@@ -46,7 +46,10 @@ public class GreeklishConverter {
 	 * Constant variable that represent suffixes for pluralization of
 	 * greeklish tokens.
 	 */
-	private static final String SUFFIX_AS = "ας";
+	private static final String SUFFIX_MATOS = "ματοσ";
+	private static final String SUFFIX_MATA = "ματα";
+	private static final String SUFFIX_MATWN = "ματων";
+	private static final String SUFFIX_AS = "ασ";
 	private static final String SUFFIX_EIA = "εια";
 	private static final String SUFFIX_EIO = "ειο";
 	private static final String SUFFIX_EIOY = "ειου";
@@ -57,7 +60,6 @@ public class GreeklishConverter {
 	private static final String SUFFIX_OS = "οσ";
 	private static final String SUFFIX_OI = "οι";
 	private static final String SUFFIX_EIS = "εισ";
-	private static final String SUFFIX_OYS = "ουσ";
 	private static final String SUFFIX_ES = "εσ";
 	private static final String SUFFIX_HS = "ησ";
 	private static final String SUFFIX_WN = "ων";
@@ -123,18 +125,28 @@ public class GreeklishConverter {
 	 * The possible suffix strings.
 	 */
 	private static final String[][] suffixStrings = new String[][] {
-		{SUFFIX_AS, "α", "ου", "ων"}, {SUFFIX_EIA, "ειο", "ειων", "ειου"},
-		{SUFFIX_EIO, "εια", "ειων", "ειου"}, {SUFFIX_EIOY, "εια", "ειου", "ειο"},
-		{SUFFIX_EIWN, "εια", "ειου", "ειο"}, {SUFFIX_IOY, "ι", "ια", "ιων"},
-		{SUFFIX_IA, "ιου", "ι", "ιων"}, {SUFFIX_IWN, "ιου", "ια", "ι"},
-		{SUFFIX_OS, "η", "ους", "εωσ", "ου", "οι", "ων"}, {SUFFIX_OI, "οσ", "ου", "ων"},
-		{SUFFIX_EIS, "η", "εωσ", "εων"}, {SUFFIX_OYS, "οσ", "η", "εων"},
-		{SUFFIX_ES, "η", "ασ", "ων", "ησ", "α"}, {SUFFIX_HS, "ων", "εσ", "η"},
-		{SUFFIX_WN, "οσ", "εσ", "α", "η", "ησ", "ου", "οι", "ο", "α"},
-		{SUFFIX_OY, "ων", "α", "ο", "εωσ", "ασ", "οσ"},
-		{SUFFIX_O, "α", "ου", "εων", "ων"},
-		{SUFFIX_H, "οσ", "ουσ", "εων", "εισ", "ησ", "ων"},
-		{SUFFIX_A, "ο" , "ου", "εων", "ων"}, {SUFFIX_I, "ιου", "ια", "ιων"}
+		{SUFFIX_MATOS, "μα", "ματων", "ματα"},  // κουρεματος, ασυρματος
+		{SUFFIX_MATA, "μα", "ματων", "ματοσ"},  // ενδυματα
+		{SUFFIX_MATWN, "μα", "ματα", "ματοσ"},  // ασυρματων, ενδυματων
+		{SUFFIX_AS, "α", "ων", "εσ"},  // πορτας, χαρτοφυλακας
+		{SUFFIX_EIA, "ειο", "ειων", "ειου", "ειασ"},  // γραφεια, ενεργεια
+		{SUFFIX_EIO, "εια", "ειων", "ειου"},  // γραφειο
+		{SUFFIX_EIOY, "εια", "ειου", "ειο"},  // γραφειου
+		{SUFFIX_EIWN, "εια", "ειου", "ειο", "ειασ"},  // ασφαλειων, γραφειων
+		{SUFFIX_IOY, "ι", "ια", "ιων"},  // πεδιου, κυνηγιου
+		{SUFFIX_IA, "ιου", "ι", "ιων", "ιασ", "ιο"},  // πεδία, αρμονια
+		{SUFFIX_IWN, "ιου", "ια", "ι", "ιο"},  // καλωδιων, κατοικιδιων
+		{SUFFIX_OS, "η", "ουσ", "ου", "οι", "ων"},  // κλιματισμος
+		{SUFFIX_OI, "οσ", "ου", "ων"},  // μυλοι, οδηγοι, σταθμοι
+		{SUFFIX_EIS, "η", "ησ", "εων"},  // συνδεσεις, τηλεορασεις
+		{SUFFIX_ES, "η", "ασ", "ων", "ησ", "α"},  // αλυσιδες
+		{SUFFIX_HS, "ων", "εσ", "η", "εων"},  // γυμναστικης, εκτυπωσης
+		{SUFFIX_WN, "οσ", "εσ", "α", "η", "ησ", "ου", "οι", "ο", "α"},  //  ινων, καπνιστων, καρτων, κατασκευων 
+		{SUFFIX_OY, "ων", "α", "ο", "οσ"},  // λαδιου, μοντελισμου, παιδικου
+		{SUFFIX_O, "α", "ου", "εων", "ων"},  // αυτοκινητο, δισκος
+		{SUFFIX_H, "οσ", "ουσ", "εων", "εισ", "ησ", "ων"},  //βελη, ψυξη, τηλεοραση, αποτριχωση
+		{SUFFIX_A, "ο" , "ου", "ων"},  // γιλεκα, εσωρουχα, 
+		{SUFFIX_I, "ιου", "ια", "ιων"}  // γιαουρτι, γραναζι
 	};
 
 	/**
