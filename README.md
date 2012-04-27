@@ -5,10 +5,12 @@ The Greeklish plugin generates tokens with latin characters from greek tokens.
 
 The generated tokens have the save position and the same offset with the original greek tokens.
 
-In order to install the plugin, simply run: `bin/plugin -install skroutz/elasticsearch-analysis-greeklish/0.6`.
+In order to install the plugin, simply run: `bin/plugin -install skroutz/elasticsearch-analysis-greeklish/0.7`.
 
     -------------------------------------
     | Greeklish Plugin | ElasticSearch	|
+    -------------------------------------
+    | 0.7              | 0.19.2         |
     -------------------------------------
     | 0.6              | 0.19.2         |
     -------------------------------------
@@ -29,6 +31,25 @@ Example usage:
 	      greeklish_analysis:
 	        type: greeklish
 	        max_expansions: 15
+
+Generation of Greek Word Variations
+-----------------------------------
+
+It is difficult to distinguish a greeklish word from an english one during a query. So, if we wanted to stem the greeklish word in order to have the same results for the different forms of this word, we should apply a stemmer in both the greeklish and english words. In order to avoid that, the 0.7 version of the plugin comes with a reverse stemmer for greek words, which produces the different forms of the a greek word (from singular to plural and vice versa) in order to produce their greeklish version.
+
+Now the greeklish word converter has two phases. The first phase produces the diffent forms of a greek word based on some grammar rules, and the second phase produces the greeklish version of each of theses greek words.
+
+This functionality is enabled by default. But, it can be disabled by setting greek\_variants variable in the elasticsearch configuration file.
+
+Example usage:
+
+	index:
+	  analysis:
+	    filter:
+	      greeklish_analysis:
+	        type: greeklish
+	        max_expansions: 15
+	        greek_variants: false
 
 Warning
 -------
