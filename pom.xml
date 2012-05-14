@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gr.skroutz</groupId>
 	<artifactId>elasticsearch-analysis-greeklish</artifactId>
-	<version>0.7</version>
+	<version>0.8</version>
 	<packaging>jar</packaging>
 	<description>Greeklish converter for ElasticSearch</description>
 	<inceptionYear>2012</inceptionYear>
@@ -19,7 +19,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<elasticsearch.version>0.19.2</elasticsearch.version>
+		<elasticsearch.version>0.19.3</elasticsearch.version>
 	</properties>
 
 	<scm>
@@ -53,14 +53,14 @@
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>3.5.0</version>
+			<version>3.6.0</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers</artifactId>
-			<version>3.5.0</version>
+			<version>3.6.0</version>
 			<scope>compile</scope>
 		</dependency>
 
