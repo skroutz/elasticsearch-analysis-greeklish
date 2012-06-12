@@ -21,7 +21,7 @@ public class GreeklishConverterTest {
 	 * counterparts.
 	 */
 	private static final String[] greekWords = { "αυτοκινητο", "ομπρελα",
-			"ξεσκεπαστοσ", };
+			"ξεσκεπαστοσ"};
 
 	/**
 	 * the greeklish counterparts that should be generated from the
