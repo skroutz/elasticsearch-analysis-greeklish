@@ -22,11 +22,24 @@
 		<elasticsearch.version>0.90.0</elasticsearch.version>
 	</properties>
 
+	<developers>
+	   <developer>
+	       <id>stathopa</id>
+	       <name>Tasos Stathopoulos</name>
+	       <email>stathopa@skroutz.gr</email>
+	       <organization>Skroutz S.A.</organization>
+	       <organizationUrl>http://www.skroutz.gr</organizationUrl>
+	       <roles>
+	           <role>developer</role>
+	       </roles>
+	   </developer>
+	</developers>
+
 	<scm>
-		<connection>scm:git:git@github.com:astathopoulos/elasticsearch-analysis-greeklish.git</connection>
-		<developerConnection>scm:git:git@github.com:astathopoulos/elasticsearch-analysis-greeklish.git
+		<connection>scm:git:git@github.com:skroutz/elasticsearch-analysis-greeklish.git</connection>
+		<developerConnection>scm:git:git@github.com:skroutz/elasticsearch-analysis-greeklish.git
         </developerConnection>
-		<url>http://github.com/astathopoulos/elasticsearch-analysis-greeklish</url>
+		<url>http://github.com/skroutz/elasticsearch-analysis-greeklish</url>
 	</scm>
 
 	<parent>
@@ -34,14 +47,6 @@
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
 	</parent>
-
-	<repositories>
-		<repository>
-			<id>oss.sonatype.org</id>
-			<name>OSS Sonatype</name>
-			<url>http://oss.sonatype.org/content/repositories/releases</url>
-		</repository>
-	</repositories>
 
 	<dependencies>
 		<dependency>
