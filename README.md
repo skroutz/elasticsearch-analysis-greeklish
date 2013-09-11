@@ -5,7 +5,7 @@ The Greeklish plugin generates tokens with latin characters from greek tokens.
 
 The generated tokens have the save position and the same offset with the original greek tokens.
 
-In order to install the latest version of the plugin, run `bin/plugin -install gr.skroutz/elasticsearch-analysis-greeklish/0.9`
+In order to install the latest version of the plugin, run `bin/plugin -install gr.skroutz/elasticsearch-analysis-greeklish/0.10`
 
 In order to install the plugin for versions prior to 0.9, run: `bin/plugin -install skroutz/elasticsearch-analysis-greeklish/0.8`.
 
