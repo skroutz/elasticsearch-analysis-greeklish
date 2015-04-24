@@ -8,7 +8,7 @@ original greek tokens.
 
 In order to install the latest version of the plugin, run:
 
-    bin/plugin -install gr.skroutz/elasticsearch-analysis-greeklish/0.10
+    bin/plugin -install gr.skroutz/elasticsearch-analysis-greeklish/0.11
 
 In order to install the plugin for versions prior to 0.9, run:
 
@@ -18,6 +18,7 @@ In order to install the plugin for versions prior to 0.9, run:
 
 Greeklish Plugin | ElasticSearch
 -----------------|----------------
+0.11             | 1.5.x
 0.10             | 0.90.2
 0.9              | 0.90.0
 0.8              | 0.19.3
