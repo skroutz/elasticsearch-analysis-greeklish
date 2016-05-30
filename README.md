@@ -10,9 +10,9 @@ In order to install the latest version of the plugin, run:
 
     bin/plugin -install gr.skroutz/elasticsearch-analysis-greeklish/0.11
 
-In order to install the plugin for versions prior to 0.9, run:
+In order to install the plugin for versions prior to 1.5.x, run:
 
-    bin/plugin -install skroutz/elasticsearch-analysis-greeklish/0.8
+    bin/plugin -install skroutz/elasticsearch-analysis-greeklish/0.10
 
 
 
