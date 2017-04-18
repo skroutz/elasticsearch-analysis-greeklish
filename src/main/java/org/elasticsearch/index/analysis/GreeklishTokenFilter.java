@@ -10,8 +10,8 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.util.AttributeSource;
-import org.elasticsearch.common.logging.ESLogger;
-import org.elasticsearch.common.logging.Loggers;
+import org.apache.logging.log4j.Logger;
+import org.elasticsearch.common.logging.ESLoggerFactory;
 
 /**
  * @author Tasos Stathopoulos
@@ -29,7 +29,8 @@ public class GreeklishTokenFilter extends TokenFilter {
 	/**
 	 * Elastic Search logger
 	 */
-    protected final ESLogger logger;
+	 private static final Logger logger = ESLoggerFactory.getLogger(
+			GreeklishConverter.class.getName());
 	/**
 	 * The type of the generated tokens
 	 */
@@ -53,7 +54,6 @@ public class GreeklishTokenFilter extends TokenFilter {
 	// Constructor
 	public GreeklishTokenFilter(TokenStream tokenStream, int maxExpansions, boolean generateGreekVariants) {
 		super(tokenStream);
-		this.logger = Loggers.getLogger("greeklish.filter");
 		this.greeklishConverter = new GreeklishConverter(maxExpansions, generateGreekVariants);
 	}
 
