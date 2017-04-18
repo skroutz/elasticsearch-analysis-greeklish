@@ -2,9 +2,9 @@ package org.elasticsearch.plugin.analysis.greeklish;
 
 import org.elasticsearch.index.analysis.AnalysisModule;
 import org.elasticsearch.index.analysis.GreeklishBinderProcessor;
-import org.elasticsearch.plugins.AbstractPlugin;
+import org.elasticsearch.plugins.Plugin;
 
-public class GreeklishPlugin extends AbstractPlugin {
+public class GreeklishPlugin extends Plugin {
 
   @Override
   public String description() {
