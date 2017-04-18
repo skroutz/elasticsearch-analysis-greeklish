@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.elasticsearch.common.logging.Loggers;
-import org.elasticsearch.common.logging.ESLogger;
+import org.apache.logging.log4j.Logger;
+import org.elasticsearch.common.logging.ESLoggerFactory;
 
 /**
  * @author Tasos Stathopoulos
@@ -21,7 +21,8 @@ public class GreeklishGenerator {
 	/**
 	 * Elastic Search logger
 	 */
-	protected final ESLogger logger;
+	private static final Logger logger = ESLoggerFactory.getLogger(
+			GreeklishConverter.class.getName());
 
 	/**
 	 * Constant variables that represent the character that substitutes a
@@ -105,8 +106,6 @@ public class GreeklishGenerator {
 	public GreeklishGenerator(int maxExpansions) {
 
 		this.maxExpansions = maxExpansions;
-
-		this.logger = Loggers.getLogger("greeklish.greeklishGenerator");
 
 		this.greeklishList = new ArrayList<StringBuilder>();
 

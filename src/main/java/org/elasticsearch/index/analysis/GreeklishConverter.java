@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.common.logging.ESLogger;
-import org.elasticsearch.common.logging.Loggers;
+import org.apache.logging.log4j.Logger;
+import org.elasticsearch.common.logging.ESLoggerFactory;
+
 
 /**
  * @author Tasos Stathopoulos </p> Generates singular/plural variants of greek
@@ -20,7 +21,8 @@ public class GreeklishConverter {
 	/**
 	 * Elastic Search logger
 	 */
-	protected final ESLogger logger;
+    private static final Logger logger = ESLoggerFactory.getLogger(
+            GreeklishConverter.class.getName());
 
 	/**
 	 * Tokens that contain only these characters will be affected by this
@@ -58,9 +60,6 @@ public class GreeklishConverter {
 
 	// Constructor
 	public GreeklishConverter(int maxExpansions, boolean generateGreekVariants) {
-
-		// Initialize the logger
-		this.logger = Loggers.getLogger("greeklish.converter");
 
 		// Initialize greekWords list
 		this.greekWords = new ArrayList<String>();
