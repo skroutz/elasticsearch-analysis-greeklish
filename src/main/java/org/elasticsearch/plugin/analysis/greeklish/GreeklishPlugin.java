@@ -1,22 +1,23 @@
 package org.elasticsearch.plugin.analysis.greeklish;
 
-import org.elasticsearch.index.analysis.AnalysisModule;
-import org.elasticsearch.index.analysis.GreeklishBinderProcessor;
+import org.elasticsearch.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.elasticsearch.index.analysis.TokenFilterFactory;
+import org.elasticsearch.plugins.AnalysisPlugin;
 import org.elasticsearch.plugins.Plugin;
 
-public class GreeklishPlugin extends Plugin {
+import org.elasticsearch.index.analysis.GreeklishTokenFilterFactory;
 
-  @Override
-  public String description() {
-    return "Generate greeklish terms from greek terms";
-  }
+import java.util.Map;
 
-  @Override
-  public String name() {
-    return "analysis-greeklish";
-  }
+import static java.util.Collections.singletonMap;
 
-  public void onModule(AnalysisModule module) {
-    module.addProcessor(new GreeklishBinderProcessor());
-  }
+public class GreeklishPlugin extends Plugin implements AnalysisPlugin {
+
+    // Use singletonMap to register our token filter,
+    // since we only have one in our plugin.
+    @Override
+    public Map<String, AnalysisProvider<TokenFilterFactory>> getTokenFilters() {
+        return singletonMap("skroutz_greeklish",
+                GreeklishTokenFilterFactory::new);
+    }
 }
