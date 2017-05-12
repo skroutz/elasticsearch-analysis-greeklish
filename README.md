@@ -15,15 +15,17 @@ In order to install the plugin for versions prior to 1.5.x, run:
     bin/plugin -install skroutz/elasticsearch-analysis-greeklish/0.10
 
 
+Versions
+------------
 
-Greeklish Plugin | ElasticSearch
------------------|----------------
-0.11             | 1.5.x
-0.10             | 0.90.2
-0.9              | 0.90.0
-0.8              | 0.19.3
-0.7              | 0.19.2
-0.6              | 0.19.2
+Greeklish Plugin | ElasticSearch | Branch |
+-----------------|---------------|--------|
+5.4.0.1          | 5.4.0         | 5.4.0  |  
+2.4.4.1          | 2.4.4         | 2.4.4  | 
+0.11             | 1.5.0         | 1.5.0  |
+0.10             | 0.90.2 	 |   -    |
+0.9              | 0.90.0	 |   -    |
+0.8              | 0.19.3	 |   -    |
 
 Expansions
 ----------
