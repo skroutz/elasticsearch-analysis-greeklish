@@ -12,7 +12,6 @@ import org.elasticsearch.common.logging.ESLoggerFactory;
 
 /**
  * @author Tasos Stathopoulos
- * </p>
  * Generates greeklish tokens for each element of list
  * of greek tokens.
  */
@@ -164,8 +163,8 @@ public class GreeklishGenerator {
 
 	/**
 	 * Add the matching latin characters to the generated greeklish tokens for a
-	 * specific Greek character. </p> For each different combination of latin
-	 * characters, a new token is generated. </p>
+	 * specific Greek character. For each different combination of latin
+	 * characters, a new token is generated.
 	 *
 	 * @param convertStrings
 	 *            The latin characters that will be added to the tokens

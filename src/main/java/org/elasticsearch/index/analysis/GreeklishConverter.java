@@ -9,12 +9,12 @@ import org.elasticsearch.common.logging.ESLoggerFactory;
 
 
 /**
- * @author Tasos Stathopoulos </p> Generates singular/plural variants of greek
+ * @author Tasos Stathopoulos Generates singular/plural variants of greek
  * 		   tokens and converts them to tokens with latin characters from which are
- * 		   matched to the corresponding greek characters.</p>
+ * 		   matched to the corresponding greek characters.
  * 		   A Greek character may have one or more latin counterparts. So,
  * 		   from a Greek token one or more latin tokens are
- *         generated. </p> Greek words have combination of vowels called
+ *         generated. Greek words have combination of vowels called
  *         digraphs. Because digraphs are special cases, they are treated separately.
  */
 public class GreeklishConverter {
@@ -77,7 +77,7 @@ public class GreeklishConverter {
 	}
 
 	/**
-	 * The actual conversion is happening here. </p>
+	 * The actual conversion is happening here.
 	 *
 	 * @param inputToken
 	 *            the Greek token
@@ -111,7 +111,7 @@ public class GreeklishConverter {
 	}
 
 	/**
-	 * Identifies words with only Greek lowercase characters. </p>
+	 * Identifies words with only Greek lowercase characters.
 	 *
 	 * @param input
 	 *            The string that will examine
