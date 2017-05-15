@@ -9,7 +9,7 @@ import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.logging.ESLogger;
 
 /**
- * @author Tasos Stathopoulos</p>
+ * @author Tasos Stathopoulos
  * Generates singular/plural variants of a greek word based
  * on a combination of predefined rules.
  */

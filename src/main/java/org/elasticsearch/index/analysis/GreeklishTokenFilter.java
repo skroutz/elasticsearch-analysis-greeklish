@@ -15,12 +15,9 @@ import org.elasticsearch.common.logging.Loggers;
 
 /**
  * @author Tasos Stathopoulos
- * </p>
  * It generates greeklish tokens(tokens with latin characters) from Greek tokens.
- * </p>
  * The generated tokens will have the same position and the same offset with the
  * original Greek tokens, and their type will be {@code greeklish_word}.
- * </p>
  * This filters acts <b>only on Greek lowercase characters</b> and for this reason
  * it should be applied after lowercase filter for Greek language.
  */
@@ -96,7 +93,6 @@ public class GreeklishTokenFilter extends TokenFilter {
 	 * This method checks if a token can be used to generate greeklish tokens.
 	 * If it is valid, it populates the greeklish token buffer with greeklish
 	 * tokens.
-	 * </p>
 	 * @return false if no tokens are generated, true elsewhere.
 	 * @throws IOException
 	 */
