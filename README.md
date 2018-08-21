@@ -47,7 +47,7 @@ Expansions
 
 There are more than one combinations of latin characters that can substitute
 each character of the greek alphabet. So, a greek token is expanded to as many
-greeklish tokens as the the combinations of the latin characters for each
+greeklish tokens as the combinations of the latin characters for each
 greek character of a token and in some cases this produces an enormous number
 of expansions. In order to prevent this from happening, a threshold of the max
 expansions is set.  The default value is 20.
