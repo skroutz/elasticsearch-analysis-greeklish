@@ -4,7 +4,9 @@ Greeklish Token Filter for ElasticSearch
 The Greeklish plugin generates tokens with latin characters from greek tokens.
 
 The generated tokens have the save position and the same offset with the
-original greek tokens.
+original greek tokens.  
+A detailed example of how to use this plugin you can be found
+ [in the wiki](https://github.com/skroutz/elasticsearch-analysis-greeklish/wiki/A-full-example-of-a-greeklish-text-pipeline)
 
 Versions
 ------------
