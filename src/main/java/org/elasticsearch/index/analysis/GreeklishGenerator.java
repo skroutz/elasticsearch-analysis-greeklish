@@ -69,8 +69,15 @@ public class GreeklishGenerator {
 			{ "ι", "i" }, { "κ", "k" }, { "λ", "l" }, { "μ", "m" },
 			{ "ν", "n" }, { "ξ", "ks", "x" }, { "ο", "o" }, { "π", "p" },
 			{ "ρ", "r" }, { "σ", "s" }, { "τ", "t" }, { "υ", "y", "u", "i" },
-			{ "φ", "f", "ph" }, { "χ", "x", "h", "ch" }, { "ψ", "c", "ps" },
+			{ "φ", "f", "ph" }, { "χ", "x", "h", "ch" }, { "ψ", "ps" },
 			{ "ω", "w", "o", "v" } };
+
+	/**
+	 * The possible string conversions for special cases.
+	 */
+	private static final String[][] specialConvertStrings = new String[][] {
+		{ "ψ", "c", "ps"}
+	};
 
 	/**
 	 * The maximum greeklish expansions per greek token.
@@ -102,7 +109,7 @@ public class GreeklishGenerator {
 	private String initialToken;
 
 	// Constructor
-	public GreeklishGenerator(int maxExpansions) {
+	public GreeklishGenerator(int maxExpansions, boolean useSpecialMapping) {
 
 		this.maxExpansions = maxExpansions;
 
@@ -119,6 +126,13 @@ public class GreeklishGenerator {
 		for (String[] convertString : convertStrings) {
 			conversions.put(convertString[0].charAt(0),
 					Arrays.copyOfRange(convertString, 1, convertString.length));
+		}
+
+		if(useSpecialMapping) {
+			for (String[] convertString : specialConvertStrings) {
+				conversions.put(convertString[0].charAt(0),
+						Arrays.copyOfRange(convertString, 1, convertString.length));
+			}
 		}
 	}
 

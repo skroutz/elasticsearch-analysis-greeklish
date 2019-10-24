@@ -49,9 +49,9 @@ public class GreeklishTokenFilter extends TokenFilter {
 	private GreeklishConverter greeklishConverter;
 
 	// Constructor
-	public GreeklishTokenFilter(TokenStream tokenStream, int maxExpansions, boolean generateGreekVariants) {
+	public GreeklishTokenFilter(TokenStream tokenStream, int maxExpansions, boolean generateGreekVariants, boolean useSpecialMapping) {
 		super(tokenStream);
-		this.greeklishConverter = new GreeklishConverter(maxExpansions, generateGreekVariants);
+		this.greeklishConverter = new GreeklishConverter(maxExpansions, generateGreekVariants, useSpecialMapping);
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class GreeklishConverter {
 	private final boolean generateGreekVariants;
 
 	// Constructor
-	public GreeklishConverter(int maxExpansions, boolean generateGreekVariants) {
+	public GreeklishConverter(int maxExpansions, boolean generateGreekVariants, boolean useSpecialMapping) {
 
 		// Initialize greekWords list
 		this.greekWords = new ArrayList<String>();
@@ -68,7 +68,7 @@ public class GreeklishConverter {
 		this.reverseStemmer = new GreekReverseStemmer();
 
 		// Initialize greeklish generator
-		this.greeklishGenerator = new GreeklishGenerator(maxExpansions);
+		this.greeklishGenerator = new GreeklishGenerator(maxExpansions, useSpecialMapping);
 
 		// Initialize setting for generating greek variants
 		this.generateGreekVariants = generateGreekVariants;
