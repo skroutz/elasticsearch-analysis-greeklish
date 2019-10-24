@@ -14,6 +14,9 @@ public class GreeklishConverterTest {
 
 	private static final boolean GENERATE_GREEK_VARIANTS = true;
 
+	private static final boolean USE_SPECIAL_MAPPING_ON = true;
+	private static final boolean USE_SPECIAL_MAPPING_OFF = false;
+
 	private GreeklishConverter converter;
 	
 	/**
@@ -22,6 +25,12 @@ public class GreeklishConverterTest {
 	 */
 	private static final String[] greekWords = { "αυτοκινητο", "ομπρελα",
 			"ξεσκεπαστοσ"};
+
+	/**
+	 * a sample of greek words to generate their greeklish
+	 * counterparts.
+	 */
+	private static final String[] greekWordsSpecial = { "ωιψηυ"};
 
 	/**
 	 * the greeklish counterparts that should be generated from the
@@ -36,6 +45,19 @@ public class GreeklishConverterTest {
 	};
 
 	/**
+	 * the greeklish counterparts that should be generated from the
+	 * greek words.
+	 */
+	private static final String[][] generatedGreeklishWordsSpecial = {
+			{
+					"oichu", "wichi", "wichu", "vipsiy",
+					"oipsiy", "wipsiy", "viciy", "oiciy",
+					"wiciy", "vipshy", "oipshy", "wipshy",
+					"vichy", "oichy", "wichy"
+			}
+	};
+
+	/**
 	 * these words should not be processed by the converter.
 	 */
 	private static final String[] invalidWords = { "mobile", "αυριο64",
@@ -47,7 +69,7 @@ public class GreeklishConverterTest {
 
 	@BeforeClass
 	public void setUp() {
-		this.converter = new GreeklishConverter(MAX_EXPANSIONS, GENERATE_GREEK_VARIANTS);
+		this.converter = new GreeklishConverter(MAX_EXPANSIONS, GENERATE_GREEK_VARIANTS, USE_SPECIAL_MAPPING_OFF);
 	}
 
 	@BeforeMethod
@@ -86,10 +108,31 @@ public class GreeklishConverterTest {
 	}
 
 	@Test
+	public void testGreekTokenConversionForValidWordsSpecial() {
+		int newMaxExpansions = 20;
+		converter = new GreeklishConverter(newMaxExpansions, GENERATE_GREEK_VARIANTS, USE_SPECIAL_MAPPING_ON);
+		for (int i = 0; i < greekWordsSpecial.length; i++) {
+			greeklishWords = converter.convert(greekWordsSpecial[i].toCharArray(),
+					greekWordsSpecial[i].length());
+
+			populateConvertedStringsList();
+
+			Assert.assertFalse(greeklishWords.isEmpty(),
+					"Greeklish words should be generated");
+
+			for (String greeklishWord : generatedGreeklishWordsSpecial[i]) {
+				Assert.assertTrue(convertedGreeklishStrings
+								.contains(greeklishWord),
+						"It should contain greeklish word: " + greeklishWord);
+			}
+		}
+	}
+
+	@Test
 	public void testMaxGreeklishExpansions() {
 		int newMaxExpansions = 2;
 		boolean generateGreekVariants = false;
-		converter = new GreeklishConverter(newMaxExpansions, generateGreekVariants);
+		converter = new GreeklishConverter(newMaxExpansions, generateGreekVariants, USE_SPECIAL_MAPPING_OFF);
 
 		greeklishWords = converter.convert(greekWords[0].toCharArray(),
 				greekWords[0].length());
@@ -114,7 +157,7 @@ public class GreeklishConverterTest {
 	public void testGreekVariantsGeneration() {
 		int newMaxExpansions = 1;
 		boolean generateGreekVariants = false;
-		converter = new GreeklishConverter(newMaxExpansions, generateGreekVariants);
+		converter = new GreeklishConverter(newMaxExpansions, generateGreekVariants, USE_SPECIAL_MAPPING_OFF);
 
 		greeklishWords = converter.convert(greekWords[0].toCharArray(),
 				greekWords[0].length());
