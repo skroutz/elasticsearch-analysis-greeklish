@@ -13,6 +13,7 @@ Versions
 
 Greeklish Plugin | ElasticSearch | Branch |
 -----------------|---------------|--------|
+7.7.0.1          | 7.7.0         | 7.7.0  |
 5.4.2.1          | 5.4.2         | 5.4.2  |
 5.4.0.1          | 5.4.0         | 5.4.0  |
 2.4.4.1          | 2.4.4         | 2.4.4  |
@@ -28,7 +29,11 @@ To list all plugins in current installation:
 
     sudo bin/elasticsearch-plugin list
 
-In order to install the latest version of the plugin, simply run:
+In order to install the latest version of the plugin run:
+
+    sudo bin/elasticsearch-plugin install gr.skroutz:elasticsearch-analysis-greeklish:7.7.0.1
+
+In order to install version 5.4.2 of the plugin run:
 
     sudo bin/elasticsearch-plugin install gr.skroutz:elasticsearch-analysis-greeklish:5.4.2.1
 
@@ -40,7 +45,7 @@ In order to install the plugin for versions prior to 1.5.x, run:
 
     sudo bin/plugin -install gr.skroutz/elasticsearch-analysis-greeklish/0.10
 
-To remove a plugin (5.x.x):
+To remove a plugin (5.x.x/7.x.x):
 
     sudo bin/elasticsearch-plugin remove <plugin_name>
 

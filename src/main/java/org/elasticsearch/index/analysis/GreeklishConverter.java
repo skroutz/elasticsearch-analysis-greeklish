@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.common.logging.ESLoggerFactory;
+import org.elasticsearch.common.logging.Loggers;
 
 
 /**
@@ -21,8 +21,9 @@ public class GreeklishConverter {
 	/**
 	 * Elastic Search logger
 	 */
-    private static final Logger logger = ESLoggerFactory.getLogger(
-            GreeklishConverter.class.getName());
+    private static final Logger logger =
+			Loggers.getLogger(GreeklishConverter.class,
+												GreeklishConverter.class.getSimpleName());
 
 	/**
 	 * Tokens that contain only these characters will be affected by this

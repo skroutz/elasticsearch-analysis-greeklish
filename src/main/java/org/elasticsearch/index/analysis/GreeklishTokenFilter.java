@@ -11,7 +11,7 @@ import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.util.AttributeSource;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.common.logging.ESLoggerFactory;
+import org.elasticsearch.common.logging.Loggers;
 
 /**
  * @author Tasos Stathopoulos
@@ -22,12 +22,9 @@ import org.elasticsearch.common.logging.ESLoggerFactory;
  * it should be applied after lowercase filter for Greek language.
  */
 public class GreeklishTokenFilter extends TokenFilter {
-
-	/**
-	 * Elastic Search logger
-	 */
-	 private static final Logger logger = ESLoggerFactory.getLogger(
-			GreeklishConverter.class.getName());
+	private static final Logger logger =
+		Loggers.getLogger(GreeklishConverter.class,
+											GreeklishConverter.class.getSimpleName());
 	/**
 	 * The type of the generated tokens
 	 */

@@ -7,16 +7,17 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <dependencySets>
         <dependencySet>
-            <outputDirectory>elasticsearch</outputDirectory>
+					<outputDirectory>/</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <useTransitiveFiltering>true</useTransitiveFiltering>
             <excludes>
                 <exclude>org.elasticsearch:elasticsearch</exclude>
+                <exclude>org.apache.lucene:lucene-core</exclude>
                 <exclude>log4j:log4j</exclude>
             </excludes>
         </dependencySet>
         <dependencySet>
-            <outputDirectory>elasticsearch</outputDirectory>
+					<outputDirectory>/</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <useTransitiveFiltering>true</useTransitiveFiltering>
             <includes>
@@ -27,7 +28,7 @@
     <fileSets>
         <fileSet>
             <directory>${basedir}/src/main/resources/</directory>
-            <outputDirectory>elasticsearch</outputDirectory>
+						<outputDirectory>/</outputDirectory>
             <includes>
                 <include>*.properties</include>
             </includes>
