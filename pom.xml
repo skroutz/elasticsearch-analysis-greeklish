@@ -20,7 +20,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<elasticsearch.version>7.7.0</elasticsearch.version>
-		<lucene.version>8.5.1</lucene.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -77,13 +76,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-			<version>${lucene.version}</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.elasticsearch.test</groupId>
 			<artifactId>framework</artifactId>
 			<version>${elasticsearch.version}</version>
@@ -94,6 +86,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -115,13 +108,6 @@
 			<artifactId>testng</artifactId>
 			<version>6.8.8</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest</artifactId>
-			<version>2.1</version>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
