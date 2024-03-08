@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gr.skroutz</groupId>
 	<artifactId>elasticsearch-analysis-greeklish</artifactId>
-	<version>7.10.0.1-SNAPSHOT</version>
+	<version>7.7.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>Greeklish converter for ElasticSearch</description>
 	<inceptionYear>2012</inceptionYear>
