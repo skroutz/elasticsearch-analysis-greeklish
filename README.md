@@ -109,3 +109,11 @@ Warning
 
 This filter acts only on greek lowercase characters and for this reason it
 should be applied after greek lowercase filter.
+
+CI/CD
+-----
+
+This repository includes automated GitHub Actions workflows for continuous integration and delivery:
+
+- __Testing & Building__: When you push to a branch or create a pull request, the workflow will automatically run tests and build the plugin with artifacts.
+- __Release__: When you push a git tag, it will trigger a build and release process that creates a release with artifacts.
