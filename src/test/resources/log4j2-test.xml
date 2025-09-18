@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR" monitorInterval="30">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{ISO8601}][%-5p][%-25c{1.}] %marker%m%n"/>
+        </Console>
+
+        <!-- Mock header_warning appender to prevent errors -->
+        <Console name="header_warning" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{ISO8601}][%-5p][%-25c{1.}] %marker%m%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- Completely silence log4j configuration errors -->
+        <Logger name="org.apache.logging.log4j.core.config" level="OFF" additivity="false"/>
+
+        <!-- Elasticsearch deprecation logger -->
+        <Logger name="org.elasticsearch.deprecation" level="WARN" additivity="false">
+            <AppenderRef ref="header_warning"/>
+        </Logger>
+
+        <!-- Elasticsearch main logger -->
+        <Logger name="org.elasticsearch" level="WARN" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+
+        <!-- Root logger -->
+        <Root level="WARN">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
