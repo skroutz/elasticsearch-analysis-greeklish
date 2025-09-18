@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.logging.log4j.Logger;
-import org.elasticsearch.common.logging.Loggers;
 
 /**
  * @author Tasos Stathopoulos
@@ -14,10 +12,6 @@ import org.elasticsearch.common.logging.Loggers;
  * on a combination of predefined rules.
  */
 public class GreekReverseStemmer {
-	private static final Logger logger =
-		Loggers.getLogger(GreeklishConverter.class,
-											GreeklishConverter.class.getSimpleName());
-
 	/**
 	 * Constant variable that represent suffixes for pluralization of
 	 * greeklish tokens.
