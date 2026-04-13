@@ -12,7 +12,7 @@ public class GreeklishTokenFilterFactory  extends AbstractTokenFilterFactory {
 	public GreeklishTokenFilterFactory(
 		IndexSettings indexSettings, Environment env, String name, Settings settings
 	) {
-        super(name, settings);
+        super(name);
             this.maxExpansions = settings.getAsInt("max_expansions", 20);
             this.generateGreekVariants = settings.getAsBoolean("greek_variants", true);
 	}
